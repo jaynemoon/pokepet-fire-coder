@@ -11,9 +11,9 @@ const HeartIcon = () => (
   <span className="inline-block w-5 h-5 text-center">❤️</span>
 );
 
-const CoffeeIcon = () => (
-  <span className="inline-block w-5 h-5 text-center">☕</span>
-);
+// const CoffeeIcon = () => (
+//   <span className="inline-block w-5 h-5 text-center">☕</span>
+// );
 
 const StarIcon = () => (
   <span className="inline-block w-5 h-5 text-center">⭐</span>
@@ -48,7 +48,9 @@ const PokePet = () => {
     linesOfCode: 0,
     hoursSpent: 0,
     newLanguages: 0,
-    projectsCompleted: 0
+    projectsCompleted: 0,
+    leetcodeSolved: 0,
+    coffeeCount: 0
   });
 
   const [allTimeStats, setAllTimeStats] = useState({
@@ -122,6 +124,48 @@ const PokePet = () => {
     }
   }, [showFeedback]);
 
+  // HP degradation when happiness or energy is low
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPet(prevPet => {
+        if (prevPet.happiness < 50 || prevPet.energy < 50) {
+          const newHealth = Math.max(0, prevPet.health - 3);
+          if (newHealth < prevPet.health) {
+            setShowFeedback(`⚠️ ${prevPet.name} is struggling! Low ${prevPet.happiness < 50 ? 'happiness' : 'energy'} is draining HP! 😰`);
+          }
+          return { ...prevPet, health: newHealth };
+        }
+        return prevPet;
+      });
+    }, 5000); // Check every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Happiness decay mechanic - happiness gradually decreases over time
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPet(prevPet => {
+        const decayRate = prevPet.level <= 10 ? 1 : prevPet.level <= 25 ? 2 : 3; // Higher level = faster decay
+        const newHappiness = Math.max(0, prevPet.happiness - decayRate);
+        
+        if (newHappiness < prevPet.happiness && newHappiness % 20 === 0 && newHappiness < 60) {
+          const messages = [
+            `${prevPet.name} is feeling lonely... needs some coding attention! 😔`,
+            `${prevPet.name}'s flame is dimming... time for some commits! 🔥💙`,
+            `${prevPet.name} misses the thrill of solving problems! 🧠💔`,
+            `${prevPet.name} yearns for the excitement of new projects! ✨😢`
+          ];
+          setShowFeedback(messages[Math.floor(Math.random() * messages.length)]);
+        }
+        
+        return { ...prevPet, happiness: newHappiness };
+      });
+    }, 30000); // Decay every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   const addCodingActivity = (type, amount) => {
     const newStats = { ...todayStats, [type]: todayStats[type] + amount };
     setTodayStats(newStats);
@@ -177,6 +221,12 @@ const PokePet = () => {
           message += ' ✨ FIRE STONE ACHIEVED! ✨';
         }
         break;
+      case 'leetcodeSolved':
+        expGain = amount * 25;
+        happinessChange = amount * 5;
+        energyChange = -amount * 2;
+        message = `${amount} LeetCode problem(s) solved! ${pet.name}'s algorithmic skills are blazing! 🧠🔥`;
+        break;
       default:
         break;
     }
@@ -228,13 +278,35 @@ const PokePet = () => {
   };
 
    const feedPet = () => {
-    setPet(prev => ({
-      ...prev,
-      health: Math.min(100, prev.health + 12),
-      happiness: Math.min(100, prev.happiness + 8),
-      energy: Math.min(100, prev.energy + 18)
-    }));
-    setShowFeedback(`Made ${pet.name} a delicious Pokémon coffee! Caffeinated and ready to code! ☕🔥`);
+    const newCoffeeCount = todayStats.coffeeCount + 1;
+    setTodayStats(prev => ({ ...prev, coffeeCount: newCoffeeCount }));
+    
+    if (newCoffeeCount > 5) {
+      // Coffee overdose penalty
+      setPet(prev => ({
+        ...prev,
+        health: Math.max(0, Math.floor(prev.health * 0.7)), // 30% HP decrease
+        happiness: Math.max(0, Math.floor(prev.happiness * 0.85)), // 15% happiness decrease
+        energy: Math.min(100, prev.energy + 5) // Reduced energy boost
+      }));
+      setShowFeedback(`⚠️ ${pet.name} has had too much coffee today! Jittery and stressed! (${newCoffeeCount} coffees) 😵‍💫☕`);
+    } else if (newCoffeeCount === 5) {
+      setPet(prev => ({
+        ...prev,
+        health: Math.min(100, prev.health + 8), // Reduced benefits
+        happiness: Math.min(100, prev.happiness + 5),
+        energy: Math.min(100, prev.energy + 15)
+      }));
+      setShowFeedback(`${pet.name} is getting caffeinated! Last safe coffee for today... ☕⚠️`);
+    } else {
+      setPet(prev => ({
+        ...prev,
+        health: Math.min(100, prev.health + 12),
+        happiness: Math.min(100, prev.happiness + 8),
+        energy: Math.min(100, prev.energy + 18)
+      }));
+      setShowFeedback(`Made ${pet.name} a delicious Pokémon coffee! Caffeinated and ready to code! ☕🔥`);
+    }
   };
 
   const restPet = () => {
@@ -254,7 +326,8 @@ const PokePet = () => {
       happiness: 100,
       energy: 100
     }));
-    setShowFeedback(`${pet.name} took a power nap! Fully restored and ready for action! 😴✨🔥`);
+    setTodayStats(prev => ({ ...prev, coffeeCount: 0 })); // Reset coffee counter
+    setShowFeedback(`${pet.name} took a power nap! Fully restored and coffee tolerance reset! 😴✨🔥`);
   };
 
   const getStatusColor = (value) => {
@@ -295,15 +368,30 @@ const PokePet = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 min-h-screen" style={{
-      background: 'linear-gradient(to bottom right, #fef2f2, #fff7ed, #fffbeb)'
+      background: 'linear-gradient(to bottom right, #dc2626, #ea580c, #f97316)'
     }}>
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">🔥 PokéPet 🔥</h1>
-        <p className="text-gray-600">Train your fire-type Pokémon through the power of coding!</p>
+        <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">🔥 PokéPet 🔥</h1>
+        <h3 className="text-xl font-bold text-white drop-shadow-md">Train your fire-type Pokémon through the power of coding!</h3>
       </div>
 
+      {/* Critical Alert - Fixed position at top */}
+      {showFeedback && (showFeedback.includes('struggling') || showFeedback.includes('draining HP')) && (
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-lg mb-6 text-center font-bold animate-pulse">
+          ⚠️ CRITICAL ALERT ⚠️<br />
+          {showFeedback}
+        </div>
+      )}
+
+      {/* Regular Feedback - Global Overlay at Bottom */}
+      {showFeedback && !(showFeedback.includes('struggling') || showFeedback.includes('draining HP')) && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-orange-100 border border-orange-500 text-orange-700 px-6 py-3 rounded-lg shadow-lg text-center font-semibold max-w-md animate-bounce">
+          {showFeedback}
+        </div>
+      )}
+
       {/* Pokemon Display */}
-      <div className={`${currentStage.colorClass} rounded-lg shadow-lg p-6 mb-6 text-white`}>
+      <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-gray-800">
         <div className="text-center mb-4">
           {/* Replace this div with an img tag when using actual images */}
           <div className="text-8xl mb-4">{currentStage.emoji}</div>
@@ -317,50 +405,65 @@ const PokePet = () => {
           />
           */}
           <h2 className="text-3xl font-bold mb-2">{pet.name}</h2>
-          <div className="bg-opacity-20 bg-white rounded-lg p-3 mb-4">
-            <p className="text-white font-medium">{currentStage.description}</p>
+          <div className="bg-gray-100 rounded-lg p-3 mb-4">
+            <p className="text-gray-700 font-medium">{currentStage.description}</p>
           </div>
           <div className="flex items-center justify-center gap-4">
             <div className="flex items-center gap-2">
               <StarIcon />
               <span className="font-semibold">Level {pet.level}</span>
             </div>
-            <div className="bg-red-600 px-3 py-1 rounded-full text-sm font-semibold">
+            <div className="bg-red-600 px-3 py-1 rounded-full text-sm font-semibold text-white">
               {pet.type} Type
             </div>
           </div>
         </div>
 
         {/* Experience Progress */}
-        <div className="bg-opacity-20 bg-white rounded-lg p-4 mb-4">
+        <div className="bg-red-50 rounded-lg p-4 mb-4">
           <div className="flex items-center justify-between mb-2">
             <span className="font-semibold">Experience</span>
             <span className="text-sm">{pet.experience} / {nextEvolutionExp} XP</span>
           </div>
-          <div className="w-full bg-opacity-30 bg-white rounded-full h-3">
+          <div className="w-full bg-gray-200 rounded-full h-3">
             <div 
-              className="bg-yellow-300 h-3 rounded-full transition-all duration-500" 
+              className="bg-orange-500 h-3 rounded-full transition-all duration-500" 
               style={{width: `${getProgressWidth(pet.experience, nextEvolutionExp)}%`}}
             ></div>
           </div>
-          <p className="text-center mt-2 text-yellow-200 text-sm font-semibold">
+          <p className="text-center mt-2 text-red-700 text-sm font-semibold">
             {getEvolutionHint()}
           </p>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-white rounded-lg shadow-lg p-4">
           <div className="flex items-center gap-2 mb-2">
             <HeartIcon />
             <span className="font-semibold">
-              HP: <span className={getStatusColor(pet.happiness)}>{pet.happiness}/100</span>
+              HP: <span className={getStatusColor(pet.health)}>{pet.health}/100</span>
             </span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
             <div 
               className="bg-red-500 h-3 rounded-full transition-all duration-300" 
+              style={{width: `${pet.health}%`}}
+            ></div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-lg p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-block w-5 h-5 text-center">😊</span>
+            <span className="font-semibold">
+              Happiness: <span className={getStatusColor(pet.happiness)}>{pet.happiness}/100</span>
+            </span>
+          </div>
+          <div className="w-full bg-gray-200 rounded-full h-3">
+            <div 
+              className="bg-pink-500 h-3 rounded-full transition-all duration-300" 
               style={{width: `${pet.happiness}%`}}
             ></div>
           </div>
@@ -382,12 +485,6 @@ const PokePet = () => {
         </div>
       </div>
 
-      {/* Feedback */}
-      {showFeedback && (
-        <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 px-4 py-3 rounded-lg mb-6 text-center font-semibold">
-          {showFeedback}
-        </div>
-      )}
 
       {/* Fire Stone Achievement */}
       {hasFireStone() && (
@@ -454,12 +551,21 @@ const PokePet = () => {
       {/* Pokemon Care */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
         <h3 className="text-xl font-semibold mb-4 text-center">🔥 Pokémon Care 🔥</h3>
+        
+        {/* Coffee Counter */}
+        <div className="text-center mb-4">
+          <span className="text-sm font-medium text-gray-600">
+            ☕ Daily Coffee Count: {todayStats.coffeeCount}/5 
+            {todayStats.coffeeCount > 5 && <span className="text-red-600 font-bold"> - OVERDOSED!</span>}
+          </span>
+        </div>
+        
         <div className="flex gap-4 justify-center flex-wrap">
           <button
             onClick={feedPet}
             className="btn btn-red"
           >
-            ☕ Make a Pokémon Coffee
+            ☕️ Make a PokéCoffee
           </button>
           <button
             onClick={restPet}
@@ -542,7 +648,7 @@ const PokePet = () => {
 
           <div className="space-y-4">
             <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-              <span className="font-medium">✨ New Languages: {todayStats.newLanguages}</span>
+              <span className="font-medium">👥 Paired Program Sessions: {todayStats.newLanguages}</span>
               <button
                 onClick={() => addCodingActivity('newLanguages', 1)}
                 className="btn btn-yellow btn-sm"
@@ -560,6 +666,24 @@ const PokePet = () => {
                 <TrophyIcon />
                 +1
               </button>
+            </div>
+
+            <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+              <span className="font-medium">🧠 LeetCode Solved: {todayStats.leetcodeSolved}</span>
+              <div className="space-x-2">
+                <button
+                  onClick={() => addCodingActivity('leetcodeSolved', 1)}
+                  className="btn btn-orange btn-sm"
+                >
+                  +1
+                </button>
+                <button
+                  onClick={() => addCodingActivity('leetcodeSolved', 3)}
+                  className="btn btn-orange btn-sm"
+                >
+                  +3
+                </button>
+              </div>
             </div>
           </div>
         </div>

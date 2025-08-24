@@ -1,38 +1,53 @@
-.App {
-  text-align: center;
+/* Custom button styles */
+.btn {
+  @apply px-4 py-2 font-semibold rounded-lg transition-all duration-200 hover:scale-105 active:scale-95;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.btn-sm {
+  @apply px-3 py-1 text-sm;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.btn-red {
+  @apply bg-red-500 text-white hover:bg-red-600;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.btn-orange {
+  @apply bg-orange-500 text-white hover:bg-orange-600;
 }
 
-.App-link {
-  color: #61dafb;
+.btn-purple {
+  @apply bg-purple-500 text-white hover:bg-purple-600;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-blue {
+  @apply bg-blue-500 text-white hover:bg-blue-600;
+}
+
+.btn-blue-dark {
+  @apply bg-blue-700 text-white hover:bg-blue-800;
+}
+
+.btn-green {
+  @apply bg-green-500 text-white hover:bg-green-600;
+}
+
+.btn-green-dark {
+  @apply bg-green-700 text-white hover:bg-green-800;
+}
+
+.btn-yellow {
+  @apply bg-yellow-500 text-white hover:bg-yellow-600;
+}
+
+/* Custom gradient backgrounds */
+.bg-gradient-orange {
+  background: linear-gradient(135deg, #fb923c, #f97316);
+}
+
+.bg-gradient-red {
+  background: linear-gradient(135deg, #f87171, #ef4444);
+}
+
+.bg-gradient-orange-yellow {
+  background: linear-gradient(135deg, #fb923c, #fbbf24);
 }
