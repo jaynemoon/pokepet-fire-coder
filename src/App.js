@@ -1,10 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
-
-// Pokemon images
-import charmanderImg from "./images/charmander.png";
-import charmeleonImg from "./images/charmeleon.png";
-import charizardImg from "./images/charizard.png";
 
 const HeartIcon = () => (
   <span className="inline-block w-5 h-5 text-center">❤️</span>
@@ -98,12 +92,20 @@ const PokePet = () => {
     16400, // Levels 31-40
   ];
 
+  // Fire-pokemon Images
+  const CharmanderImg = () =>
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png";
+  const CharmeleonImg = () =>
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png";
+  const CharizardImg = () =>
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png";
+
   // Pokemon evolution stages
   const pokemonStages = {
     charmander: {
       minLevel: 1,
       maxLevel: 15,
-      image: "charmanderImg",
+      image: "CharmanderImg",
       name: "Charmander",
       description:
         "A fire lizard learning to code! Its tail flame burns brighter with each commit.",
@@ -112,7 +114,7 @@ const PokePet = () => {
     charmeleon: {
       minLevel: 16,
       maxLevel: 35,
-      image: "charmeleonImg",
+      image: "CharmeleonImg",
       name: "Charmeleon",
       description:
         "An evolved fire Pokémon! More skilled at coding and breathing flames.",
@@ -121,7 +123,7 @@ const PokePet = () => {
     charizard: {
       minLevel: 36,
       maxLevel: 40,
-      image: "charizardImg",
+      image: "CharizardImg",
       name: "Charizard",
       description:
         "A legendary dragon! Master of code and fire, soaring through complex algorithms.",
@@ -486,17 +488,13 @@ const PokePet = () => {
       {/* Pokemon Display */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-gray-800">
         <div className="text-center mb-4">
-          {/* Replace this div with an img tag when using actual images */}
-          <div className="text-8xl mb-4">{currentStage.emoji}</div>
-          {/* 
-          Uncomment this when you have images:
-          <img 
-            src={currentStage.image} 
+          <div className="text-8xl mb-4">{currentStage.image}</div>
+          <img
+            src={currentStage.image}
             alt={currentStage.name}
             className="w-32 h-32 mx-auto mb-4"
-            style={{imageRendering: 'pixelated'}}
+            style={{ imageRendering: "pixelated" }}
           />
-          */}
           <h2 className="text-3xl font-bold mb-2">{pet.name}</h2>
           <div className="bg-gray-100 rounded-lg p-3 mb-4">
             <p className="text-gray-700 font-medium">
