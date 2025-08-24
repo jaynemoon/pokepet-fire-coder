@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
 
 const HeartIcon = () => (
   <span className="inline-block w-5 h-5 text-center">❤️</span>
@@ -93,19 +94,16 @@ const PokePet = () => {
   ];
 
   // Fire-pokemon Images
-  const CharmanderImg = () =>
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png";
-  const CharmeleonImg = () =>
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png";
-  const CharizardImg = () =>
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png";
+  const CharmanderImg = "./images/charmander.png";
+  const CharmeleonImg = "./images/charmeleon.png";
+  const CharizardImg = "./images/charizard";
 
   // Pokemon evolution stages
   const pokemonStages = {
     charmander: {
       minLevel: 1,
       maxLevel: 15,
-      image: "CharmanderImg",
+      image: CharmanderImg,
       name: "Charmander",
       description:
         "A fire lizard learning to code! Its tail flame burns brighter with each commit.",
@@ -114,7 +112,7 @@ const PokePet = () => {
     charmeleon: {
       minLevel: 16,
       maxLevel: 35,
-      image: "CharmeleonImg",
+      image: CharmeleonImg,
       name: "Charmeleon",
       description:
         "An evolved fire Pokémon! More skilled at coding and breathing flames.",
@@ -123,7 +121,7 @@ const PokePet = () => {
     charizard: {
       minLevel: 36,
       maxLevel: 40,
-      image: "CharizardImg",
+      image: CharizardImg,
       name: "Charizard",
       description:
         "A legendary dragon! Master of code and fire, soaring through complex algorithms.",
@@ -488,7 +486,6 @@ const PokePet = () => {
       {/* Pokemon Display */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-gray-800">
         <div className="text-center mb-4">
-          <div className="text-8xl mb-4">{currentStage.image}</div>
           <img
             src={currentStage.image}
             alt={currentStage.name}
