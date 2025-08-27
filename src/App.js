@@ -105,8 +105,6 @@ const PokePet = () => {
       maxLevel: 15,
       image: CharmanderImg,
       name: "Charmander",
-      description:
-        "From the time it is born, a flame burns at the tip of its tail. It's life would end if the flame were to go out.",
       colorClass: "bg-gradient-orange",
     },
     charmeleon: {
@@ -114,8 +112,6 @@ const PokePet = () => {
       maxLevel: 35,
       image: CharmeleonImg,
       name: "Charmeleon",
-      description:
-        "It lashes about with its tail to knock down its foe. It then tears up the fallen opponent with sharp claws.",
       colorClass: "bg-gradient-red",
     },
     charizard: {
@@ -123,8 +119,6 @@ const PokePet = () => {
       maxLevel: 40,
       image: CharizardImg,
       name: "Charizard",
-      description:
-        "Its wings can carry this POKéMON close to an altitude of 4,600 feet. It blows out fire at very high temperatures.",
       colorClass: "bg-gradient-orange-yellow",
     },
   };
@@ -454,7 +448,7 @@ const PokePet = () => {
     >
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
-          🔥 PokéPet 🔥
+          🔥 PokéPet Fire Coder! 🔥
         </h1>
         <h3 className="text-xl font-bold text-white drop-shadow-md">
           Train your fire-type Pokémon through the power of coding!
@@ -493,11 +487,6 @@ const PokePet = () => {
             style={{ imageRendering: "pixelated" }}
           />
           <h2 className="text-3xl font-bold mb-2">{pet.name}</h2>
-          <div className="bg-gray-100 rounded-lg p-3 mb-4">
-            <p className="text-gray-700 font-medium">
-              {currentStage.description}
-            </p>
-          </div>
           <div className="flex items-center justify-center gap-4">
             <div className="flex items-center gap-2">
               <StarIcon />
@@ -812,9 +801,8 @@ const PokePet = () => {
               </span>
               <button
                 onClick={() => addCodingActivity("projectsCompleted", 1)}
-                className="btn btn-red btn-sm flex items-center gap-1"
+                className="btn btn-red btn-sm"
               >
-                <TrophyIcon />
                 +1
               </button>
             </div>
