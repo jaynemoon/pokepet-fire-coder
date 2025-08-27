@@ -1,4 +1,8 @@
 /* Custom button styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .btn {
   @apply px-4 py-2 font-semibold rounded-lg transition-all duration-200 hover:scale-105 active:scale-95;
 }

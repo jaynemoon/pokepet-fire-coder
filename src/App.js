@@ -5,15 +5,15 @@ const HeartIcon = () => (
   <span className="inline-block w-5 h-5 text-center">❤️</span>
 );
 const StarIcon = () => (
-  <span className="inline-block w-5 h-5 text-center">⭐</span>
+  <span className="inline-block w-5 h-5 text-center"></span>
 );
 
 const CodeIcon = () => (
-  <span className="inline-block w-5 h-5 text-center">💻</span>
+  <span className="inline-block w-5 h-5 text-center"></span>
 );
 
 const TrophyIcon = () => (
-  <span className="inline-block w-5 h-5 text-center">🏆</span>
+  <span className="inline-block w-5 h-5 text-center"></span>
 );
 
 const ZapIcon = () => (
@@ -93,7 +93,7 @@ const PokePet = () => {
     16400, // Levels 31-40
   ];
 
-  // Fire-pokemon Images
+  // Fire-pokemon images
   const CharmanderImg = "./images/charmander.png";
   const CharmeleonImg = "./images/charmeleon.png";
   const CharizardImg = "./images/charizard";
@@ -106,7 +106,7 @@ const PokePet = () => {
       image: CharmanderImg,
       name: "Charmander",
       description:
-        "A fire lizard learning to code! Its tail flame burns brighter with each commit.",
+        "From the time it is born, a flame burns at the tip of its tail. It's life would end if the flame were to go out.",
       colorClass: "bg-gradient-orange",
     },
     charmeleon: {
@@ -115,7 +115,7 @@ const PokePet = () => {
       image: CharmeleonImg,
       name: "Charmeleon",
       description:
-        "An evolved fire Pokémon! More skilled at coding and breathing flames.",
+        "It lashes about with its tail to knock down its foe. It then tears up the fallen opponent with sharp claws.",
       colorClass: "bg-gradient-red",
     },
     charizard: {
@@ -124,7 +124,7 @@ const PokePet = () => {
       image: CharizardImg,
       name: "Charizard",
       description:
-        "A legendary dragon! Master of code and fire, soaring through complex algorithms.",
+        "Its wings can carry this POKéMON close to an altitude of 4,600 feet. It blows out fire at very high temperatures.",
       colorClass: "bg-gradient-orange-yellow",
     },
   };
@@ -193,10 +193,10 @@ const PokePet = () => {
           newHappiness < 60
         ) {
           const messages = [
-            `${prevPet.name} is feeling lonely... needs some coding attention! 😔`,
-            `${prevPet.name}'s flame is dimming... time for some commits! 🔥💙`,
-            `${prevPet.name} misses the thrill of solving problems! 🧠💔`,
-            `${prevPet.name} yearns for the excitement of new projects! ✨😢`,
+            `${prevPet.name} is feeling lonely... needs some coding attention!`,
+            `${prevPet.name}'s flame is dimming... time for some commits!`,
+            `${prevPet.name} misses the thrill of solving problems!`,
+            `${prevPet.name} yearns for the excitement of new projects!`,
           ];
           setShowFeedback(
             messages[Math.floor(Math.random() * messages.length)]
@@ -240,7 +240,7 @@ const PokePet = () => {
       case "linesOfCode":
         expGain = Math.floor(amount / 10) * 8;
         energyChange = -Math.floor(amount / 50);
-        message = `${amount} lines of code! ${pet.name} breathes fire into the code! 💨🔥`;
+        message = `${amount} lines of code! ${pet.name} breathes fire into the code!`;
         break;
       case "hoursSpent":
         expGain = amount * 20;
@@ -249,12 +249,12 @@ const PokePet = () => {
         message =
           amount > 8
             ? `${pet.name} is overworked! Even fire types need rest! 😴`
-            : `${amount}h of coding! ${pet.name} is on fire! ⏰🔥`;
+            : `${amount}h of coding! ${pet.name} is on fire!`;
         break;
       case "newLanguages":
         expGain = amount * 60;
         happinessChange = amount * 12;
-        message = `Learned ${amount} new language(s)! ${pet.name} roars with excitement! 🦎✨`;
+        message = `Learned ${amount} new language(s)! ${pet.name} roars with excitement!`;
         if (
           newAllTimeStats.totalLanguages >= 1 &&
           newAllTimeStats.totalProjects >= 5
@@ -309,11 +309,11 @@ const PokePet = () => {
           newStage = "charizard";
           newName = "Charizard";
           setShowFeedback(
-            `🎉 Charmeleon evolved into Charizard at level ${newLevel} using the Fire Stone! The ultimate coding dragon! 🔥💎🐉`
+            `🎉 Charmeleon evolved into Charizard at level ${newLevel} using the Fire Stone! The ultimate coding dragon! 🔥`
           );
         } else {
           setShowFeedback(
-            `${prevPet.name} reached level ${newLevel} but needs a Fire Stone to evolve! (1 language + 5 projects) 🔥💎`
+            `${prevPet.name} reached level ${newLevel} but needs a Fire Stone to evolve! (1 language + 5 projects) 🔥`
           );
         }
       } else if (newLevel >= 16 && prevPet.stage === "charmander") {
@@ -388,7 +388,7 @@ const PokePet = () => {
       happiness: Math.min(100, prev.happiness + 15),
     }));
     setShowFeedback(
-      `You pet ${pet.name} gently! It purrs with contentment! 🥰🔥`
+      `You pet ${pet.name} gently! It growls with contentment! 🥰🔥`
     );
   };
 
@@ -435,7 +435,7 @@ const PokePet = () => {
     } else if (pet.stage === "charmeleon") {
       if (pet.level >= 36) {
         return hasFireStone()
-          ? "Ready to evolve with Fire Stone! 🔥💎"
+          ? "Ready to evolve with Fire Stone!"
           : "Needs Fire Stone to evolve! (1 language + 5 projects)";
       }
       return "Evolves at Level 36 with Fire Stone";
@@ -592,7 +592,7 @@ const PokePet = () => {
       {hasFireStone() && (
         <div className="bg-gradient-to-r bg-red-100 border-2 border-red-300 rounded-lg p-4 mb-6">
           <div className="text-center">
-            <div className="text-3xl mb-2">🔥💎</div>
+            <div className="text-3xl mb-2"></div>
             <h3 className="text-xl font-bold text-red-800 mb-2">
               FIRE STONE ACHIEVED!
             </h3>
@@ -614,7 +614,11 @@ const PokePet = () => {
       {!hasFireStone() && (
         <div className="bg-gray-50 border border-gray-300 rounded-lg p-4 mb-6">
           <div className="text-center">
-            <div className="text-2xl mb-2">🔥💎</div>
+            <img
+              src="./images/firestone.png"
+              alt="pokemon-firestone-image"
+              className="w-24 h-24 mx-auto mb-4"
+            />
             <h3 className="text-xl font-semibold text-gray-700 mb-3">
               Fire Stone Progress
             </h3>
@@ -622,7 +626,7 @@ const PokePet = () => {
               <div className="bg-white p-3 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium text-gray-700">
-                    Languages Learned
+                    Paired Program Sessions
                   </span>
                   <span
                     className={`font-bold ${
@@ -692,9 +696,9 @@ const PokePet = () => {
 
       {/* Pokemon Care */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-        <h3 className="text-xl font-semibold mb-4 text-center">
+        {/* <h3 className="text-xl font-semibold mb-4 text-center">
           🔥 Pokémon Care 🔥
-        </h3>
+        </h3> */}
 
         {/* Coffee Counter */}
         <div className="text-center mb-4">
@@ -723,7 +727,7 @@ const PokePet = () => {
       <div className="bg-white rounded-lg shadow-lg p-6">
         <h3 className="text-xl font-semibold mb-4 flex items-center gap-2 justify-center">
           <CodeIcon />
-          💻 Dev Training to Mastery 💻
+          Code Mastery
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
