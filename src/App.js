@@ -12,10 +12,6 @@ const CodeIcon = () => (
   <span className="inline-block w-5 h-5 text-center"></span>
 );
 
-const TrophyIcon = () => (
-  <span className="inline-block w-5 h-5 text-center"></span>
-);
-
 const ZapIcon = () => (
   <span className="inline-block w-5 h-5 text-center">⚡</span>
 );
@@ -483,7 +479,7 @@ const PokePet = () => {
           <img
             src={currentStage.image}
             alt={currentStage.name}
-            className="w-32 h-32 mx-auto mb-4"
+            className="w-48 h-48 mx-auto mb-4"
             style={{ imageRendering: "pixelated" }}
           />
           <h2 className="text-3xl font-bold mb-2">{pet.name}</h2>
