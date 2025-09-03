@@ -89,12 +89,12 @@ const PokePet = () => {
     16400, // Levels 31-40
   ];
 
-  // Fire-pokemon images
+  // Fire-Pokémon images
   const CharmanderImg = "./images/charmander.png";
   const CharmeleonImg = "./images/charmeleon.png";
   const CharizardImg = "./images/charizard";
 
-  // Pokemon evolution stages
+  // Pokémon evolution stages
   const pokemonStages = {
     charmander: {
       minLevel: 1,
@@ -473,7 +473,7 @@ const PokePet = () => {
           </div>
         )}
 
-      {/* Pokemon Display */}
+      {/* Pokémon Display */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6 text-gray-800">
         <div className="text-center mb-4">
           <img
@@ -679,7 +679,7 @@ const PokePet = () => {
         </div>
       )}
 
-      {/* Pokemon Care */}
+      {/* Pokémon Care */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
         {/* <h3 className="text-xl font-semibold mb-4 text-center">
           🔥 Pokémon Care 🔥
