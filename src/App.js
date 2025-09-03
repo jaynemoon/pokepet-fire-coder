@@ -436,7 +436,7 @@ const PokePet = () => {
 
   return (
     <div
-      className="max-w-4xl mx-auto p-6 min-h-screen"
+      className="max-w-10xl mx-auto p-6 min-h-screen"
       style={{
         background:
           "linear-gradient(to bottom right, #dc2626, #ea580c, #f97316)",
@@ -838,15 +838,31 @@ const PokePet = () => {
                 Fire-Type Training Tips:
               </h4>
               <p className="text-red-700 text-sm">
-                Your {pet.name} grows stronger with consistent coding practice!
-                Commits boost happiness and fuel the tail flame. Learning new
-                languages gives massive XP boosts. Complete projects for
-                evolution energy, but don't overtrain - even fire types need
-                rest to maintain their inner flame! 🔥✨
+                Your PokéPet grows stronger with consistent coding practice!
+                Commits boost happiness and fuel the tail flame. Paired
+                programming sessions, learning new languages and frameworks,
+                gives massive XP boosts. Be mindful of getting rest to protect
+                the inner flame and not burn out✨
               </p>
             </div>
           </div>
         </div>
+      </div>
+      <div className="max-w-7xl mx-auto px-1 sm:px-1 lg:px-1 text-center mt-8 sm:mt-8 pt-8">
+        <div className="m-4">
+          <a
+            href="https://buymeacoffee.com/jaynemoon?new=1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 px-2 sm:px-2 py-2 rounded-lg font-bold transition-all duration-200 shadow-md hover:shadow-md hover:scale-105 text-yellow-950 bg-orange-300 hover:bg-yellow-100 text-sm xs:text-base"
+            style={{ border: "4px solid #brown" }}
+          >
+            Make Jayney a Pokémon Coffee!
+          </a>
+        </div>
+        <p className="text-orange-100 dark:text-orange-100 font-bold text-xs sm:text-sm">
+          Built with ❤️ for Pokémon collectors everywhere
+        </p>
       </div>
     </div>
   );
